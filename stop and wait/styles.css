@@ -1,0 +1,453 @@
+:root {
+    --primary-color: #4361ee;
+    --secondary-color: #3f37c9;
+    --success-color: #4bb543;
+    --error-color: #ff4d4d;
+    --background-color: #f8f9fa;
+    --text-color: #2b2d42;
+    --border-radius: 12px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.subtitle {
+    color: #666;
+    font-size: 1.1em;
+}
+
+/* Tutorial Box Styles */
+.tutorial-box {
+    background: linear-gradient(145deg, #ffffff, #f5f5f5);
+    border-left: 4px solid var(--primary-color);
+    transform: translateY(0);
+    transition: all 0.3s ease;
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tutorial-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Simulation Container Styles */
+.simulation-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 40px 0;
+    min-height: 400px;
+}
+
+.computer {
+    width: 200px;
+    height: 160px;
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.screen {
+    background: #e9ecef;
+    height: 120px;
+    border-radius: 8px;
+    padding: 10px;
+    overflow: hidden;
+}
+
+.data-queue {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.data-packet {
+    background: linear-gradient(145deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    position: relative;
+    animation: float 3s ease-in-out infinite;
+    box-shadow: 0 0 10px rgba(67, 97, 238, 0.3);
+    transition: all 0.3s ease;
+}
+
+.data-packet.ack {
+    background: linear-gradient(145deg, var(--success-color), #3a9f35);
+    box-shadow: 0 0 10px rgba(75, 181, 67, 0.3);
+}
+
+.data-packet.packet-loss {
+    background: linear-gradient(145deg, var(--error-color), #ff3333);
+    box-shadow: 0 0 20px rgba(255, 77, 77, 0.4);
+}
+
+@keyframes float {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(5deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
+}
+
+.data-packet.sending {
+    box-shadow: 0 0 20px var(--primary-color);
+    animation: sendPulse 1s infinite;
+}
+
+@keyframes sendPulse {
+    0% { transform: scale(1); box-shadow: 0 0 20px var(--primary-color); }
+    50% { transform: scale(1.1); box-shadow: 0 0 30px var(--primary-color); }
+    100% { transform: scale(1); box-shadow: 0 0 20px var(--primary-color); }
+}
+
+/* Network Path Styles */
+.network-path {
+    flex-grow: 1;
+    position: relative;
+    height: 200px;
+    margin: 0 40px;
+    background: linear-gradient(45deg, rgba(67, 97, 238, 0.05), rgba(67, 97, 238, 0.15));
+    border-radius: 20px;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.path-line {
+    height: 6px;
+    background: linear-gradient(to right, #4361ee, #3f37c9);
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    box-shadow: 0 0 10px rgba(67, 97, 238, 0.3);
+}
+
+.path-line::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -20%;
+    width: 20%;
+    height: 4px;
+    background: var(--primary-color);
+    animation: dataFlow 2s linear infinite;
+    box-shadow: 0 0 15px var(--primary-color);
+}
+
+@keyframes dataFlow {
+    0% { transform: translateX(0) translateY(-50%); }
+    100% { transform: translateX(600%) translateY(-50%); }
+}
+
+.packet-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+/* Timer Styles */
+.timer {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 8px;
+    background: rgba(67, 97, 238, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.timer-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(to right, #4361ee, #3f37c9);
+    box-shadow: 0 0 10px rgba(67, 97, 238, 0.3);
+    transition: width 5s linear;
+}
+
+/* Animation Classes */
+.packet-animation {
+    position: absolute;
+    transition: all 1s ease-in-out;
+    transform: translate(-50%, -50%);
+}
+
+.packet-loss {
+    transition: all 0.5s ease-in-out;
+    animation: packetLoss 1s forwards;
+}
+
+.ack-loss {
+    animation: ackLoss 1s forwards;
+}
+
+.retransmission {
+    animation: retransmit 0.5s ease-in-out;
+}
+
+@keyframes packetLoss {
+    0% { 
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+    50% { 
+        transform: translate(-50%, calc(-50% + 30px)) scale(0.8);
+        opacity: 0.5;
+        box-shadow: 0 0 30px rgba(255, 77, 77, 0.6);
+    }
+    100% { 
+        transform: translate(-50%, calc(-50% + 60px)) scale(0);
+        opacity: 0;
+    }
+}
+
+@keyframes ackLoss {
+    0% { 
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+    50% { 
+        transform: translate(-50%, calc(-50% - 30px)) scale(0.8);
+        opacity: 0.5;
+        box-shadow: 0 0 30px rgba(255, 77, 77, 0.6);
+    }
+    100% { 
+        transform: translate(-50%, calc(-50% - 60px)) scale(0);
+        opacity: 0;
+    }
+}
+
+@keyframes retransmit {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* Protocol Info Styles */
+.protocol-info {
+    background: linear-gradient(145deg, #ffffff, #f5f5f5);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
+}
+
+.state-info {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.state-item {
+    text-align: center;
+    padding: 15px;
+    border-radius: 8px;
+    background: rgba(67, 97, 238, 0.05);
+    transition: all 0.3s ease;
+}
+
+.state-item:hover {
+    transform: translateY(-3px);
+    background: rgba(67, 97, 238, 0.1);
+}
+
+/* Legend Styles */
+.legend {
+    background: white;
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
+}
+
+.legend-items {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.legend-color {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.packet-color { background: var(--primary-color); }
+.ack-color { background: var(--success-color); }
+.error-color { background: var(--error-color); }
+
+/* Control Panel Styles */
+.control-panel {
+    background: white;
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    align-items: center;
+}
+
+/* Button Styles */
+.primary-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+
+.primary-btn:hover {
+    background: var(--secondary-color);
+}
+
+.secondary-btn {
+    background: white;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+    padding: 10px 22px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+.secondary-btn:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* Status Labels */
+.status-label {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 0.9em;
+    color: #666;
+    position: relative;
+}
+
+.status-indicator {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.8em;
+    color: white;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.status-indicator.show {
+    opacity: 1;
+}
+
+.status-success {
+    background: var(--success-color);
+}
+
+.status-error {
+    background: var(--error-color);
+}
+
+/* Info Panel Styles */
+.info-panel {
+    background: white;
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-label {
+    display: block;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+/* Educational Tooltips */
+[data-tooltip] {
+    position: relative;
+    cursor: help;
+}
+
+[data-tooltip]:before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 8px 12px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    border-radius: 6px;
+    font-size: 0.8em;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+[data-tooltip]:hover:before {
+    opacity: 1;
+    visibility: visible;
+    bottom: calc(100% + 10px);
+}
+
+/* Add styles for pause button */
+.control-panel .buttons {
+    display: flex;
+    gap: 10px;
+}

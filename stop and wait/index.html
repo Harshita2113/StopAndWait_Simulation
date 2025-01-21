@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stop-and-Wait ARQ Protocol Simulator</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Stop-and-Wait ARQ Protocol</h1>
+            <p class="subtitle">Learn how reliable data transmission works!</p>
+        </header>
+
+        <div class="tutorial-box" id="tutorialBox">
+            <div class="tutorial-content">
+                <div class="tutorial-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <p id="tutorialText">Welcome! This simulation shows how computers ensure reliable data transfer.</p>
+                <div class="tutorial-progress">
+                    <div class="progress-dots">
+                        <span class="dot active"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+                </div>
+            </div>
+            <button id="nextTip" class="tutorial-btn">Next Tip</button>
+        </div>
+
+        <div class="simulation-container">
+            <div class="sender-box" data-tooltip="Sends packets and waits for acknowledgment">
+                <div class="device-label">Sender</div>
+                <div class="computer sender">
+                    <div class="screen">
+                        <div class="data-queue" id="senderQueue">
+                            <div class="data-packet">1</div>
+                            <div class="data-packet">2</div>
+                            <div class="data-packet">3</div>
+                            <div class="data-packet">4</div>
+                            <div class="data-packet">5</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="status-label" id="senderStatus">Ready to send</div>
+            </div>
+
+            <div class="network-path">
+                <div class="packet-container" id="packetContainer"></div>
+                <div class="path-line"></div>
+                <div class="timer" id="timer">
+                    <div class="timer-fill"></div>
+                </div>
+            </div>
+
+            <div class="receiver-box" data-tooltip="Receives packets and sends acknowledgments">
+                <div class="device-label">Receiver</div>
+                <div class="computer receiver">
+                    <div class="screen">
+                        <div class="received-data" id="receiverQueue"></div>
+                    </div>
+                </div>
+                <div class="status-label" id="receiverStatus">Waiting for data</div>
+            </div>
+        </div>
+
+        <div class="info-bubbles">
+            <div class="info-bubble" data-tooltip="Packets are sent one at a time">
+                <i class="fas fa-info-circle"></i>
+            </div>
+            <div class="info-bubble" data-tooltip="Waiting for acknowledgment">
+                <i class="fas fa-clock"></i>
+            </div>
+        </div>
+
+        <div class="protocol-info">
+            <h3>Protocol State</h3>
+            <div class="state-info">
+                <div class="state-item">
+                    <span class="state-label">Sequence Number:</span>
+                    <span id="seqNum">0</span>
+                </div>
+                <div class="state-item">
+                    <span class="state-label">Window Size:</span>
+                    <span>1 (Stop-and-Wait)</span>
+                </div>
+                <div class="state-item">
+                    <span class="state-label">Timeout:</span>
+                    <span id="timeoutDuration">2000ms</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="control-panel">
+            <div class="speed-control">
+                <label>Animation Speed:</label>
+                <input type="range" id="speedControl" min="0.5" max="2" step="0.5" value="1">
+            </div>
+            
+            <div class="scenario-select">
+                <label>Select Scenario:</label>
+                <select id="scenarioSelect">
+                    <option value="normal">Perfect Transmission</option>
+                    <option value="packet-loss">Packet Loss</option>
+                    <option value="ack-loss">ACK Loss</option>
+                </select>
+            </div>
+
+            <div class="buttons">
+                <button id="startBtn" class="primary-btn">Start Simulation</button>
+                <button id="pauseBtn" class="secondary-btn">Pause</button>
+                <button id="resetBtn" class="secondary-btn">Reset</button>
+            </div>
+        </div>
+
+        <div class="legend">
+            <h4>Legend</h4>
+            <div class="legend-items">
+                <div class="legend-item">
+                    <div class="legend-color packet-color"></div>
+                    <span>Data Packet</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color ack-color"></div>
+                    <span>ACK Packet</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color error-color"></div>
+                    <span>Lost Packet/ACK</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-panel">
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-label">Packets Sent:</span>
+                    <span id="packetsSent">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Successful Deliveries:</span>
+                    <span id="successCount">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Timeouts:</span>
+                    <span id="timeoutCount">0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
